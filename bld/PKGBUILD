@@ -1,0 +1,34 @@
+# Maintainer: Sam Stuewe <samuel dot stuewe at gmail dot com>
+
+pkgname=ich-git
+pkgver=0
+pkgrel=1
+pkgdesc='a reimplementation of icanhazip in C/lwan'
+url='https://github.com/HalosGhost/ich'
+arch=('i686' 'x86_64')
+license=('GPL')
+depends=('hitch' 'acme-client' 'lwan')
+makedepends=('git')
+source=('git+https://github.com/HalosGhost/ich.git')
+sha256sums=('SKIP')
+install='ich.install'
+
+pkgver () {
+    cd ich
+    printf '0.r%s.%s' "$(git rev-list --count HEAD)" "$(git log -1 --pretty=format:%h)"
+}
+
+prepare () {
+    cd ich
+    ./configure
+}
+
+build () {
+    cd ich
+    make
+}
+
+package () {
+    cd ich
+    make DESTDIR="$pkgdir" install
+}

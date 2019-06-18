@@ -1,0 +1,13 @@
+[Unit]
+Description=/srv/http/redirector
+After=network.target
+Requires=ich.service
+
+[Service]
+PrivateTmp=true
+ExecStart=/usr/bin/website redirector
+KillSignal=SIGINT
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,12 @@
+[Unit]
+Description=/srv/http/ich
+After=network.target
+
+[Service]
+PrivateTmp=true
+ExecStart=/usr/bin/website ich
+KillSignal=SIGINT
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
