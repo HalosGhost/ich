@@ -23,7 +23,12 @@ lwan does not officially support running on an externally-visible port, and it r
 To bypass this limitation, we leverage hitch to redirect traffic from ``443`` to ``8443`` (where the contentful instance of lwan is running) and back.
 
 Furthermore, to forcibly redirect HTTP to HTTPS, we use nftables to redirect traffic from ``80`` to ``8080``.
-Then, a very small instance of lwan is running on port ``8080`` that does nothing but respond to ACME challenge requests and redirect all other traffic to ``https://halosgho.st``.
+Then, a very small instance of lwan is running on port ``8080`` that does nothing but respond to ACME challenge requests and redirect all other traffic to whatever URL is specified in the environment variable ``ICH_REDIRECT_TARGET``.
+You should set this variable using ``systemctl edit`` adding the following:
+
+.. code::
+
+    Environment=ICH_REDIRECT_TARGET='theurlyouwant'
 
 Design Characteristics
 ----------------------
