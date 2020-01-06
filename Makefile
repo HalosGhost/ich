@@ -38,6 +38,9 @@ cov-build: clean dist
 dist:
 	@$(MKDIR) dist/.well-known/acme-challenge
 
+run: bin
+	@(pushd ./dist; sudo ./$(PROGNM))
+
 install: all
 	@$(MKDIR) -- $(BINDIR) $(SVCDIR) $(MAINDIR)
 	@cp -a --no-preserve=ownership dist/* $(MAINDIR)/
