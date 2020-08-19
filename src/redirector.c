@@ -12,9 +12,9 @@ main (void) {
 
     #define ACMEDIR "/.well-known/acme-challenge"
 
-    char * target = getenv("ICH_REDIRECT_TARGET");
+    char * target = getenv("HOMEPAGE_REDIRECT_TARGET");
     if ( !target ) {
-        fputs("ERROR: No target specified in ICH_REDIRECT_TARGET\n", stderr);
+        fputs("ERROR: No target specified in HOMEPAGE_REDIRECT_TARGET\n", stderr);
         goto cleanup;
     }
 

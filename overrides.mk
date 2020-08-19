@@ -1,5 +1,5 @@
 SOURCES = $(filter-out src/redirector.c, $(wildcard src/*.c))
-PACKAGES = lwan-git hitch-git acme-client-git
+PACKAGES = lwan-git hitch uacme
 
 .PHONY: deploy packages
 

@@ -12,9 +12,10 @@ The Stack
 
 * `lwan <https://lwan.ws/>`_ - used as a library to build the webserver and page logic
 * `hitch <https://hitch-tls.org/>`_ - TLS-terminating proxy server
-* `acme-client (portable) <https://kristaps.bsd.lv/acme-client/>`_ - an ACME-protocol client for TLS Cert renewal
+* `uacme <https://github.com/ndilieto/uacme/>`_ - an ACME-protocol client for TLS Cert renewal
 
 All running on Arch Linux using `nftables <https://netfilter.org/projects/nftables/>`_ for traffic redirection and forwarding
+``hitch`` and ``nftables`` are optional; but if you want the simplest configuration, example configurations are provided in ``./cfg``.
 
 Traffic Redirection and Forwarding
 ----------------------------------
@@ -23,12 +24,19 @@ lwan does not officially support running on an externally-visible port, and it r
 To bypass this limitation, we leverage hitch to redirect traffic from ``443`` to ``8443`` (where the contentful instance of lwan is running) and back.
 
 Furthermore, to forcibly redirect HTTP to HTTPS, we use nftables to redirect traffic from ``80`` to ``8080``.
-Then, a very small instance of lwan is running on port ``8080`` that does nothing but respond to ACME challenge requests and redirect all other traffic to whatever URL is specified in the environment variable ``ICH_REDIRECT_TARGET``.
-You should set this variable using ``systemctl edit`` adding the following:
+Then, a very small instance of lwan is running on port ``8080`` that does nothing but respond to ACME challenge requests and redirect all other traffic to whatever URL is specified in the environment variable ``HOMEPAGE_REDIRECT_TARGET``.
+
+Configuration
+-------------
+
+To ensure that the redirector appropriately redirects to the intended URL, add the following line (with the appropriate modifications) using ``systemctl edit``:
 
 .. code::
 
-    Environment=ICH_REDIRECT_TARGET='theurlyouwant'
+    Environment=HOMEPAGE_REDIRECT_TARGET='https://domain.tld'
+
+If using ``hitch`` to terminate the TLS-endpoint, the example configuration in ``./cfg`` should have ``domain.tld`` replaced with the appropriate URL for the certificate.
+Similarly, ``domain.tld`` (and/or ``server.domain.tld``) sould be replaced with the appropriate domain for the certificate issuance.
 
 Design Characteristics
 ----------------------
